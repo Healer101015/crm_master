@@ -1,8 +1,11 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { ContatoService } from "./contato.service";
 import { Contato } from "./entities/contato.entity";
 
+@ApiTags('Contatos')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller("/contatos")
 export class ContatoController {

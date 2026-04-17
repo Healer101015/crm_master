@@ -1,8 +1,11 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { ClienteService } from "./cliente.service";
 import { Cliente } from "./entities/cliente.entity";
 
+@ApiTags('Clientes')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller("/clientes")
 export class ClienteController {
