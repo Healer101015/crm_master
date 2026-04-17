@@ -1,4 +1,4 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsOptional } from "class-validator";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Contato } from "../../contato/entities/contato.entity";
 
@@ -22,6 +22,11 @@ export class Cliente {
   @IsNotEmpty()
   @Column({ length: 255, nullable: false })
   email: string;
+
+  // Novo campo: Inicia sempre como falso por padrão
+  @IsOptional()
+  @Column({ type: "boolean", default: false })
+  statusOportunidade: boolean;
 
   @OneToMany(() => Contato, (contato) => contato.cliente)
   contato: Contato[];

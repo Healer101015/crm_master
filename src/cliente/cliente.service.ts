@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, ILike, Repository } from "typeorm";
+import { DeleteResult, Repository } from "typeorm";
 import { Cliente } from "./entities/cliente.entity";
 
 @Injectable()
@@ -34,6 +34,13 @@ export class ClienteService {
 
     async update(cliente: Cliente): Promise<Cliente> {
         await this.findById(cliente.id);
+        return await this.clienteRepository.save(cliente);
+    }
+
+    // NOVA LÓGICA: Busca o cliente e altera o status para true
+    async transformarEmOportunidade(id: number): Promise<Cliente> {
+        let cliente = await this.findById(id);
+        cliente.statusOportunidade = true;
         return await this.clienteRepository.save(cliente);
     }
 

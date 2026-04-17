@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { ClienteService } from "./cliente.service";
@@ -33,6 +33,13 @@ export class ClienteController {
     @HttpCode(HttpStatus.OK)
     update(@Body() cliente: Cliente): Promise<Cliente> {
         return this.clienteService.update(cliente);
+    }
+
+    // NOVO ENDPOINT: Usa Patch porque atualiza apenas um campo específico
+    @Patch('/:id/oportunidade')
+    @HttpCode(HttpStatus.OK)
+    transformarEmOportunidade(@Param('id', ParseIntPipe) id: number): Promise<Cliente> {
+        return this.clienteService.transformarEmOportunidade(id);
     }
 
     @Delete('/:id')
